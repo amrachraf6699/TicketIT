@@ -12,7 +12,7 @@ trait ReservationCode
             if ($i > 0) {
                 $code .= '-';
             }
-            $partial = \Illuminate\Support\Str::random(4);
+            $partial = \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(4));
             $code .= $partial;
         }
 

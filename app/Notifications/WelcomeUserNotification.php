@@ -52,8 +52,8 @@ class WelcomeUserNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'subject' => 'Welcome to our application',
-            'message' => 'Welcome, ' . $this->user->name . ' to our application. We are happy to have you here. Feel free to explore our application and let us know if you have any questions.'
+            'message' => 'Welcome to our application',
+            'details' => 'Welcome, ' . $this->user->name . ' to our application. We are happy to have you here. Feel free to explore our application and let us know if you have any questions.'
         ];
     }
 

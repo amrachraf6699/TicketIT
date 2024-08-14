@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\User\EventsController;
+use App\Http\Controllers\API\User\NotificationsController;
 use App\Http\Controllers\API\User\ProfileController;
 use App\Http\Controllers\API\User\ReservationsController;
 use App\Http\Controllers\API\User\SessionsController;
@@ -27,3 +28,6 @@ Route::get('reservations',[ReservationsController::class,'index']);
 Route::post('reservations',[ReservationsController::class,'store']);
 Route::get('reservation/{reservation:uuid}',[ReservationsController::class,'show'])->whereUuid('uuid')->name('reservation.show');
 
+//Notifications Routes
+Route::get('notifications',[NotificationsController::class,'index']);
+Route::get('notifications/{notification}',[NotificationsController::class,'read'])->whereUuid('notification')->name('notification.read');

@@ -27,9 +27,14 @@ class ReservationPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, $event_price_id): Response
     {
-        return $user->exists;
+
+        $reservation = $user->reservations()->where('event_price_id', $event_price_id)->exists();
+
+        return !$reservation
+                ? Response::allow()
+                : Response::denyWithStatus(403, 'You have already reserved a seat for this event');
     }
 
     /**

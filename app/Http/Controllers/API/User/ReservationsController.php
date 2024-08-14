@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Resources\ReservationsResource;
+use App\Jobs\ReservationJob;
+use App\Models\EventPrice;
 use App\Models\Reservation;
 use App\Traits\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,17 +33,21 @@ class ReservationsController extends Controller
 
     public function store(CreateReservationRequest $request)
     {
+        Gate::authorize('create', [Reservation::class, $request->event_price_id]);
+
+        $available_seats = EventPrice::where('id', $request->event_price_id)->value('quantity');
+
+        if ($available_seats == 0) {
+            return $this->error(400, 'Sorry, there are no available seats for this event');
+        }
+
         $user = auth()->user();
+        $event_price_id = $request->event_price_id;
 
-        $reservation = $user->reservations()->create($request->validated());
+        ReservationJob::dispatch($event_price_id,$user);
 
-
-        return $this->ok(200,
-            'Your reservation has been created successfully',
-            [
-                'id' => $reservation->uuid,
-                'code' => $reservation->code,
-            ]
+        return $this->ok(201,
+            'Your reservation has been created successfully . Please check your email or notifications for more details',
         );
     }
 
