@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -20,9 +21,18 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('api/auth')
                 ->group(base_path('routes/API/auth.php'));
 
-            Route::middleware(['api','auth:sanctum'])
+            Route::middleware(['api','auth:sanctum',RoleMiddleware::class.':user'])
                 ->prefix('api/user')
                 ->group(base_path('routes/API/user.php'));
+
+
+            Route::middleware(['api','auth:sanctum',RoleMiddleware::class.':event_planner'])
+            ->prefix('api/event_planner')
+            ->group(base_path('routes/API/event_planner.php'));
+
+            Route::middleware(['api','auth:sanctum',RoleMiddleware::class.':speaker'])
+            ->prefix('api/speaker')
+            ->group(base_path('routes/API/speaker.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {

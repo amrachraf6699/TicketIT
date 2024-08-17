@@ -15,4 +15,14 @@ trait GeneratePDF
 
         return $path;
     }
+
+    public function SpeakersTicket($user)
+    {
+        $path = 'tickets/' . \Illuminate\Support\Str::uuid() . '.pdf';
+
+        Pdf::view('pdf.speaker_id', compact('user'))
+            ->save(public_path($path));
+
+        return $path;
+    }
 }

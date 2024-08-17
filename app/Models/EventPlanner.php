@@ -21,7 +21,11 @@ class EventPlanner extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    
+    public function speakers()
+    {
+        return $this->hasMany(Speaker::class);
+    }
+
     public function events()
     {
         return $this->hasMany(Event::class);

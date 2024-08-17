@@ -11,7 +11,7 @@ class EventsController extends Controller
 {
     public function index()
     {
-        $events = Event::paginate(3);
+        $events = Event::active()->get();
 
         return $this->ok(200, 'Events fetched successfully',
         [
@@ -24,7 +24,7 @@ class EventsController extends Controller
     public function show(Event $event)
     {
         $event->load('planner.user', 'prices');
-        
+
         return $this->ok(200, 'Event fetched successfully', new EventsResource($event));
     }
 }

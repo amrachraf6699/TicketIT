@@ -18,6 +18,6 @@ class Speaker extends Model
 
     public function company()
     {
-        return $this->belongsTo(EventPlanner::class);
+        return $this->belongsTo(EventPlanner::class , 'event_planner_id');
     }
 }

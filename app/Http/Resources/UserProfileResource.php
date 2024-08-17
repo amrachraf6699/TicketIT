@@ -28,6 +28,7 @@ class UserProfileResource extends JsonResource
                 $this->updated_at->format('Y-m-d H:i:s') ,
                 'Never Updated'
             ),
+            'is_verified' => $this->when($request->routeIs('speaker.show'), $this->is_verified),
         ];
     }
 }

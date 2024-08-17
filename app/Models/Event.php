@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\UploadImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, UploadImage;
 
     protected $guarded = [];
 
@@ -27,8 +28,25 @@ class Event extends Model
 
 
 
+
+
     public function prices()
     {
         return $this->hasMany(EventPrice::class);
+    }
+
+
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::creating(function ($reservation) {
+            $reservation->uuid = \Illuminate\Support\Str::uuid();
+        });
+    }
+
+    public function setBannerAttribute($value)
+    {
+        $this->attributes['banner'] = $this->uploadImage('public_path', $value, 'images/events');
     }
 }

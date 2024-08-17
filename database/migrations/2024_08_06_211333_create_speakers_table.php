@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('speakers', function (Blueprint $table) {
             $table->id();
             $table->string('job_title');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(EventPlanner::class)->constrained()->onDelete('cascade');
             $table->timestamps();
