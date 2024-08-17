@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\User\EventsController;
-use App\Http\Controllers\API\User\NotificationsController;
-use App\Http\Controllers\API\User\ProfileController;
-use App\Http\Controllers\API\User\ReservationsController;
-use App\Http\Controllers\API\User\SessionsController;
+use App\Http\Controllers\API\User\{EventsController , NotificationsController , ProfileController , ReservationsController , SessionsController};
 use Illuminate\Support\Facades\Route;
 
 
